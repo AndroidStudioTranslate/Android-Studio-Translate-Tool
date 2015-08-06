@@ -686,6 +686,42 @@ public class TAS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_savePropertiesActionPerformed
 
+    private void saveProperties(String jarFilePathStr,List<String> kList,List<String> vList,String choosePropertiesPath){
+        
+        InputStream is = null, is1 = null;
+        OutputStream fos = null;
+        File tmpFile = null;
+        try {
+            File jarFilePath = new File(jarFilePathStr);
+            tmpFile = File.createTempFile("tmp", ".properties");
+            Properties prop = new Properties();
+            is = new FileInputStream(tmpFile);
+            prop.load(is);
+            fos = new FileOutputStream(tmpFile);
+            int count = kList.size();
+            for (int i = 0; i < count; i++) {
+                prop.put(kList.get(i), wt.utf8ToUnicode(vList.get(i)));
+            }
+            prop.store(fos, "Update:" + choosePropertiesPath);
+            is1 = new FileInputStream(tmpFile);
+            pc2.write2JarFile(jarFilePath, choosePropertiesPath, pc2.inputStream2byteArray(is1));
+            jButton_saveProperties.setEnabled(false);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                is.close();
+                is1.close();
+                fos.close();
+                tmpFile.deleteOnExit();
+            } catch (IOException ex) {
+                Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         System.out.println(jTextField1.getText().toString());
         if (jTextField1.getText().toString() != null || !jTextField1.getText().toString().equals("")) {
