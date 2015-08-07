@@ -1034,6 +1034,7 @@ public class TAS extends javax.swing.JFrame {
                                 while (itnew.hasNext()) {
                                     Map.Entry<String, String> entry = itnew.next();
                                     prop.put(entry.getKey(), wt.utf8ToUnicode(entry.getValue()));
+//                                    prop.put(entry.getKey(), entry.getValue());
 //                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
 //                                System.out.println();
 //                                System.out.printf("new key:%s==>value:%s", entry.getKey(), prop.getProperty(entry.getKey()));
