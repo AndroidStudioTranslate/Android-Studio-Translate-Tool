@@ -62,7 +62,6 @@ public class Post {
         }
 
         //读取返回内容
-
         try {
             if (con.getResponseCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
@@ -87,10 +86,24 @@ public class Post {
      * @param tvalue 需要翻译的中文字符串
      * @return
      */
-    public static String tg(String translate_site,String tvalue) {
+    public static String tg(String translate_site, String tvalue) {
         Map<String, String> map = new HashMap<String, String>();;
         map.put("origin", tvalue);
         return http(translate_site, map).trim();
+    }
+
+    /**
+     * 获取翻译结果(比用JSON速度更快)
+     *
+     * @param tvalue 需要翻译的中文字符串
+     * @return
+     */
+    public String tg1(String translate_site, String tvalue) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("origin", tvalue);
+        String tempt = WordsTransfer.unicodeToUtf8(http(translate_site, map).trim());
+        tempt = tempt.substring(tempt.lastIndexOf(":") + 1, tempt.length() - 3).replaceAll("\"", "");
+        return tempt;
     }
 //    public static void main(String[] args) {
 //        Map<String, String> map = new HashMap<String, String>();;

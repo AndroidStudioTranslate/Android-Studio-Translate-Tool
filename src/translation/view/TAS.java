@@ -235,6 +235,14 @@ public class TAS extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem_translate = new javax.swing.JMenuItem();
+        jDialog_ra = new javax.swing.JDialog();
+        jTextField_newfile = new javax.swing.JTextField();
+        jButton_new = new javax.swing.JButton();
+        jTextField_oldfile = new javax.swing.JTextField();
+        jButton_old = new javax.swing.JButton();
+        jButton_compare = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea_list = new javax.swing.JTextArea();
         jTextField_file = new javax.swing.JTextField();
         jButton_fileview1 = new javax.swing.JButton();
         jButton_getJarContext = new javax.swing.JButton();
@@ -251,6 +259,7 @@ public class TAS extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
+        jButton_replaceAll = new javax.swing.JButton();
 
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setLocationByPlatform(true);
@@ -358,6 +367,84 @@ public class TAS extends javax.swing.JFrame {
         });
         jPopupMenu1.add(jMenuItem_translate);
 
+        jDialog_ra.setTitle("比较新旧版");
+        jDialog_ra.setMinimumSize(new java.awt.Dimension(500, 300));
+
+        jTextField_newfile.setColumns(30);
+        jTextField_newfile.setText("G:\\as汉化\\resources_en20140221.jar");
+
+        jButton_new.setText("新");
+        jButton_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_newActionPerformed(evt);
+            }
+        });
+
+        jTextField_oldfile.setColumns(30);
+        jTextField_oldfile.setText("G:\\as汉化\\old\\AndroidStudio源文件备份.jar");
+
+        jButton_old.setText("旧");
+        jButton_old.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_oldActionPerformed(evt);
+            }
+        });
+
+        jButton_compare.setText("比  较");
+        jButton_compare.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_compareMouseClicked(evt);
+            }
+        });
+
+        bar_compare = jScrollPane5.getVerticalScrollBar();
+
+        jTextArea_list.setColumns(20);
+        jTextArea_list.setEditable(false);
+        jTextArea_list.setRows(5);
+        jScrollPane5.setViewportView(jTextArea_list);
+
+        javax.swing.GroupLayout jDialog_raLayout = new javax.swing.GroupLayout(jDialog_ra.getContentPane());
+        jDialog_ra.getContentPane().setLayout(jDialog_raLayout);
+        jDialog_raLayout.setHorizontalGroup(
+            jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_raLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5)
+                    .addGroup(jDialog_raLayout.createSequentialGroup()
+                        .addGroup(jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog_raLayout.createSequentialGroup()
+                                .addComponent(jTextField_newfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton_new))
+                            .addGroup(jDialog_raLayout.createSequentialGroup()
+                                .addComponent(jTextField_oldfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton_old)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_compare, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDialog_raLayout.setVerticalGroup(
+            jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_raLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton_compare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDialog_raLayout.createSequentialGroup()
+                        .addGroup(jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField_newfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_new))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialog_raLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField_oldfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_old))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("翻译属性文件工具");
 
@@ -444,6 +531,13 @@ public class TAS extends javax.swing.JFrame {
             }
         });
 
+        jButton_replaceAll.setText("比较新旧版本");
+        jButton_replaceAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_replaceAllMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -468,7 +562,7 @@ public class TAS extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton_getJarContext)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))))
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -479,12 +573,12 @@ public class TAS extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 15, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jButton_saveProperties, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton_saveProperties, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                .addComponent(jButton_replaceAll)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -505,7 +599,9 @@ public class TAS extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField_bak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton_fileview2))
-                    .addComponent(jButton3))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton_replaceAll)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
@@ -686,8 +782,8 @@ public class TAS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_savePropertiesActionPerformed
 
-    private void saveProperties(String jarFilePathStr,List<String> kList,List<String> vList,String choosePropertiesPath){
-        
+    private void saveProperties(String jarFilePathStr, List<String> kList, List<String> vList, String choosePropertiesPath) {
+
         InputStream is = null, is1 = null;
         OutputStream fos = null;
         File tmpFile = null;
@@ -721,7 +817,7 @@ public class TAS extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         System.out.println(jTextField1.getText().toString());
         if (jTextField1.getText().toString() != null || !jTextField1.getText().toString().equals("")) {
@@ -829,6 +925,275 @@ public class TAS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable_kvMouseReleased
 
+    private void jButton_replaceAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_replaceAllMouseClicked
+        //比较新旧版本
+        jDialog_ra.show();
+    }//GEN-LAST:event_jButton_replaceAllMouseClicked
+
+    private void jButton_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_newActionPerformed
+        if (!isReplaceStart) {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileSelectionMode(0);//设置选择文件模式0为选择文件，1为目录,2为目录或文件
+            jfc.setDialogTitle("请选择新版属性文件");//标题
+            if (jTextField_newfile.getText().toString() != null) {
+                jfc.setCurrentDirectory(new File(jTextField_newfile.getText()).getParentFile());
+            }
+            int result = jfc.showDialog(null, null);
+            if (result == 0) {
+                fnew = jfc.getSelectedFile();
+                String file = fnew.getAbsolutePath();
+                jTextField_newfile.setText(file);
+                newfiles = PropertiesControl.getJarFileContent(new java.io.File(jTextField_newfile.getText().toString()));
+                System.out.println("newfiles count : " + newfiles.length);
+
+            }
+        } else {
+            show("替换正在进行中，请稍候。。。", "提示");
+        }
+    }//GEN-LAST:event_jButton_newActionPerformed
+
+    private void jButton_oldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_oldActionPerformed
+        if (!isReplaceStart) {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setFileSelectionMode(0);//设置选择文件模式0为选择文件，1为目录,2为目录或文件
+            jfc.setDialogTitle("请选择旧版属性文件");//标题
+            if (jTextField_oldfile.getText().toString() != null) {
+                jfc.setCurrentDirectory(new File(jTextField_oldfile.getText()).getParentFile());
+            }
+            int result = jfc.showDialog(null, null);
+            if (result == 0) {
+                fold = jfc.getSelectedFile();
+                String file = fold.getAbsolutePath();
+                jTextField_oldfile.setText(file);
+                oldfiles = PropertiesControl.getJarFileContent(new java.io.File(jTextField_oldfile.getText().toString()));
+                System.out.println("oldfiles count : " + oldfiles.length);
+            }
+        } else {
+            show("替换正在进行中，请稍候。。。", "提示");
+        }
+    }//GEN-LAST:event_jButton_oldActionPerformed
+
+    private void jButton_compareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_compareMouseClicked
+        if (!isReplaceStart) {
+            isReplaceStart = true;
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    JarFile newjarFile = null, oldjarFile = null;
+                    try {
+                        newjarFile = new JarFile(jTextField_newfile.getText().toString());
+                        oldjarFile = new JarFile(jTextField_oldfile.getText().toString());
+                        for (int i = 0; i < newfiles.length; i++) {
+                            //System.out.println("Newfile:" + newfiles[i] + "  Oldfile:" + oldfiles[i]);
+                            ZipEntry entrynew = newjarFile.getEntry(newfiles[i]);
+                            ZipEntry entryold;
+
+                            if (arryContains(oldfiles, newfiles[i])) {
+                                entryold = oldjarFile.getEntry(newfiles[i]);
+                            } else {
+                                String listtemp = "";
+                                if (i == 0) {
+                                    listtemp = newfiles[i];
+                                } else {
+                                    listtemp = newline + "新版中增加的属性文件" + newfiles[i];
+                                }
+                                System.out.println(i + "--新版中增加的属性文件-->" + listtemp);
+                                jTextArea_list.append(listtemp);
+                                continue;
+                            }
+                            InputStream isnew = newjarFile.getInputStream(entrynew);
+                            InputStream isold = oldjarFile.getInputStream(entryold);
+                            PropertiesControl2 pc2new = new PropertiesControl2(isnew);
+                            PropertiesControl2 pc2old = new PropertiesControl2(isold);
+                            Map<String, String> kvMapNew = pc2new.getKeysAndValuesMap();
+                            Map<String, String> kvMapOld = pc2old.getKeysAndValuesMap();
+                            Iterator<Map.Entry<String, String>> itold = kvMapOld.entrySet().iterator();
+                            while (itold.hasNext()) {
+                                Map.Entry<String, String> entry = itold.next();
+                                if (kvMapNew.containsKey(entry.getKey())) {
+                                    kvMapNew.put(entry.getKey(), entry.getValue());
+//                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
+//                                System.out.println();
+                                }
+                            }
+                            Iterator<Map.Entry<String, String>> itnew = kvMapNew.entrySet().iterator();
+                            InputStream is = null, is1 = null;
+                            OutputStream fos = null;
+                            File tmpFile = null;
+                            try {
+                                File jarFilePath = new File(jTextField_newfile.getText().toString());
+
+                                tmpFile = File.createTempFile("tmp", ".properties");
+                                Properties prop = new Properties();
+                                is = new FileInputStream(tmpFile);
+                                prop.load(is);
+                                fos = new FileOutputStream(tmpFile);
+//                            System.out.println("============以下为新数据============");
+                                while (itnew.hasNext()) {
+                                    Map.Entry<String, String> entry = itnew.next();
+                                    prop.put(entry.getKey(), wt.utf8ToUnicode(entry.getValue()));
+//                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
+//                                System.out.println();
+//                                System.out.printf("new key:%s==>value:%s", entry.getKey(), prop.getProperty(entry.getKey()));
+//                                System.out.println();
+                                }
+                                prop.store(fos, "Update:" + newfiles[i]);
+                                is1 = new FileInputStream(tmpFile);
+                                if (i == 0) {
+                                    pc2new.write2JarFile(jarFilePath, "temp" + jarFilePath.getName(), newfiles[i], pc2new.inputStream2byteArray(is1));
+                                } else {
+                                    pc2new.write2JarFile(new File(jarFilePath.getParent(), "temp" + jarFilePath.getName() + ".jar"), null, newfiles[i], pc2new.inputStream2byteArray(is1), 2);
+                                }
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
+                                Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+                            } finally {
+                                try {
+                                    is.close();
+                                    is1.close();
+                                    fos.close();
+//                tmpFile.deleteOnExit();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+//                        byte[] bytesnew = pc.inputStream2byteArray(isnew);
+//                        byte[] bytesold = pc.inputStream2byteArray(isold);
+//                        newvalues = pc.getBytesValue(bytesnew);
+//                        newkeys = new String[newvalues.length];
+//                        oldvalues = pc.getBytesValue(bytesold);
+//                        oldkeys = new String[oldvalues.length];
+//                        for (int j = 0; j < newvalues.length; j++) {
+//                            if (!newvalues[j].contains("=")) {
+//                                newkeys[j] = newvalues[j];
+//                            } else {
+//                                newkeys[j] = newvalues[j].substring(0, newvalues[j].indexOf("="));
+//                            }
+//                            //System.out.println(i+"  new :"+newkeys[j]);
+//                        }
+//                        //System.out.println("test1111");
+//                        for (int j = 0; j < oldvalues.length; j++) {
+//                            if (!oldvalues[j].contains("=")) {
+//                                oldkeys[j] = oldvalues[j];
+//                            } else {
+//                                oldkeys[j] = oldvalues[j].substring(0, oldvalues[j].indexOf("="));
+//                            }
+//                            System.out.println(j + "  old :" + oldvalues[j]);
+//                        }
+//                        //System.out.println("test11112222");
+//                        int same = 0;
+//                        StringBuffer sb = new StringBuffer();
+//                        if (newvalues.length > oldvalues.length) {
+//                            //System.out.println("test1");
+//                            valuestemp = new String[newvalues.length];
+//                            for (int j = 0; j < newvalues.length; j++) {
+//                                for (int k = 0; k < oldvalues.length; k++) {
+//                                    if (oldvalues[k].equals(newvalues[j])) {
+//                                        valuestemp[j] = oldvalues[k];
+//                                        same++;
+//                                    }
+//                                }
+//                                if (same == 0) {
+//                                    valuestemp[j] = newvalues[j];
+//                                }
+//                                System.out.println(j + "   >>>" + valuestemp[j]);
+//                            }
+//                            for (int k = 0; k < newvalues.length; k++) {
+//                                if (k == 0) {
+//                                    sb.append(valuestemp[k]);
+//                                } else {
+//                                    sb.append(newline + valuestemp[k]);
+//                                }
+//                            }
+//                        } else if (newvalues.length == oldvalues.length) {
+//                            for (int k = 0; k < newvalues.length; k++) {
+//                                if (k == 0) {
+//                                    sb.append(oldvalues[k]);
+//                                } else {
+//                                    sb.append(newline + oldvalues[k]);
+//                                }
+//                            }
+//                        } else {
+//                            // System.out.println("test2");
+//                            valuestemp = new String[oldvalues.length];
+//                            for (int j = 0; j < oldvalues.length; j++) {
+//                                for (int k = 0; k < newvalues.length; k++) {
+//                                    //System.out.println("test3");
+//                                    if (oldvalues[j].equals(newvalues[k])) {
+//                                        valuestemp[j] = oldvalues[j];
+//                                        same++;
+//                                    }
+//                                }
+//                                if (same == 0) {
+//                                    valuestemp[j] = oldvalues[j];
+//                                }
+//                                System.out.println(j + "---->" + valuestemp[j]);
+//                            }
+//                            for (int k = 0; k < oldvalues.length; k++) {
+//                                if (k == 0) {
+//                                    sb.append(valuestemp[k]);
+//                                } else {
+//                                    sb.append(newline + valuestemp[k]);
+//                                }
+//                            }
+//                            //System.out.println(sb.toString());
+//                        }
+//                        pc.write2JarFile(new File(jTextField_oldfile.getText().toString()), newfiles[i], sb.toString().getBytes());
+                            String listtemp = "";
+                            if (i == 0) {
+                                listtemp = newfiles[i];
+                            } else {
+                                listtemp = newline + newfiles[i];
+                            }
+                            System.out.println(i + "---->" + listtemp);
+                            jTextArea_list.append(listtemp);
+                            bar_compare.setValue(bar_compare.getMaximum());
+                            Thread.sleep(1000);
+                        }
+
+                    } catch (Exception e) {
+                    }
+                    for (String sold : oldfiles) {
+                        if (arryContains(newfiles, sold)) {
+
+                        } else {
+                            String listtemp = "";
+                            listtemp = newline + "新版中删除的属性文件" + sold;
+                            System.out.println("--新版中删除的属性文件-->" + listtemp);
+                            jTextArea_list.append(listtemp);
+                        }
+                    }
+                    jTextArea_list.append(newline + "比较完毕！！！" + newline + newline + newline + newline + newline);
+                    bar_compare.setValue(bar_compare.getMaximum());
+                    isReplaceStart = false;
+                }
+            }).start();
+        } else {
+            show("替换正在进行中，请稍候。。。", "提示");
+        }
+    }//GEN-LAST:event_jButton_compareMouseClicked
+
+    /**
+     * 判断某个字符串是否存在于数组中
+     *
+     * @param stringArray 原数组
+     * @param source 查找的字符串
+     * @return 是否找到
+     */
+    private static boolean arryContains(String[] stringArray, String source) {
+        if (stringArray != null) {
+            for (String str : stringArray) {
+                if (str.contains(source)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 //        if (evt.getButton() == MouseEvent.BUTTON3) {
 //            rightClickIndex = jTable_kv.rowAtPoint(evt.getPoint());
 //            jPopupMenu1.show(jTable_kv, evt.getX(), evt.getY());
@@ -925,6 +1290,23 @@ public class TAS extends javax.swing.JFrame {
         });
     }
 
+    private void show(String msg, String title) {
+        show(msg, title, JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void show(String msg, String title, int optionType, int msgType) {
+        int option = JOptionPane.showConfirmDialog(null, msg, title, optionType, msgType, null);
+//        switch (option) {
+//            case JOptionPane.YES_NO_OPTION: {
+//                saveAsFile();
+//                break;
+//            }
+//            case JOptionPane.NO_OPTION:
+//                System.exit(0);
+//
+//        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -1019,25 +1401,6 @@ public class TAS extends javax.swing.JFrame {
         }
     }
 
-    private java.io.File f, f1;
-    PropertiesControl pc = new PropertiesControl();
-    PropertiesControl2 pc2;
-    //private static String newline = System.getProperty("line.separator");
-    private static String newline = "\r\n";
-    private static String chooseConfigPath = null;
-    String[] keys;
-    HttpDownloader hd = new HttpDownloader();
-    WordsTransfer wt = new WordsTransfer();
-    MSDN_Translate msdnt = new MSDN_Translate();
-    Post post = new Post();
-    String translate_site_baidu = "http://viphp.sinaapp.com/baidu/translate/translate.php?origin=%s";
-    int index = 0;
-    TableColumn tc_id, tc_key, tc_value_origin, tc_value_new;
-    TableCellEditor tce_value_new;
-    String[] ColumnNames = {"序号", "键名", "键值", "翻译"};
-    List<String> keyList = new ArrayList<String>();
-    List<String> valueList = new ArrayList<String>();
-    List<String> valueNewList = new ArrayList<String>();
     TableModel dataModel = new AbstractTableModel() {
         /**
          *
@@ -1104,23 +1467,48 @@ public class TAS extends javax.swing.JFrame {
         }
 
     };
-
+    private java.io.File f, f1, fnew, fold;
+    PropertiesControl pc = new PropertiesControl();
+    PropertiesControl2 pc2;
+    //private static String newline = System.getProperty("line.separator");
+    private static String newline = "\r\n";
+    private static String chooseConfigPath = null;
+    String[] keys, newfiles, newkeys, newvalues, oldfiles, oldkeys, oldvalues, valuestemp;
+    JScrollBar bar_compare;
+    HttpDownloader hd = new HttpDownloader();
+    WordsTransfer wt = new WordsTransfer();
+    MSDN_Translate msdnt = new MSDN_Translate();
+    Post post = new Post();
+    String translate_site_baidu = "http://viphp.sinaapp.com/baidu/translate/translate.php?origin=%s";
+    int index = 0;
+    TableColumn tc_id, tc_key, tc_value_origin, tc_value_new;
+    TableCellEditor tce_value_new;
+    String[] ColumnNames = {"序号", "键名", "键值", "翻译"};
+    List<String> keyList = new ArrayList<String>();
+    List<String> valueList = new ArrayList<String>();
+    List<String> valueNewList = new ArrayList<String>();
     MultiLineRowRenderer multiLineHeaderRenderer = new MultiLineRowRenderer();
     TableColumnModel cmodel = null;
     private int rightClickIndex = 0;
+    private boolean isReplaceStart = false;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton_compare;
     private javax.swing.JButton jButton_fileview1;
     private javax.swing.JButton jButton_fileview2;
     private javax.swing.JButton jButton_getJarContext;
+    private javax.swing.JButton jButton_new;
+    private javax.swing.JButton jButton_old;
+    private javax.swing.JButton jButton_replaceAll;
     private javax.swing.JButton jButton_saveProperties;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog_ra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1131,12 +1519,16 @@ public class TAS extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable_kv;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea_list;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField_bak;
     private javax.swing.JTextField jTextField_file;
+    private javax.swing.JTextField jTextField_newfile;
+    private javax.swing.JTextField jTextField_oldfile;
     // End of variables declaration//GEN-END:variables
 }

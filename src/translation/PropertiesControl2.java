@@ -14,9 +14,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.jar.JarEntry;
@@ -34,6 +36,8 @@ public class PropertiesControl2 {
 
     private List<String> keyList = new ArrayList<String>();
     private List<String> valueList = new ArrayList<String>();
+
+    private Map<String, String> kvMap = new HashMap<String, String>();
 
     public PropertiesControl2(String filepath) {
         try {
@@ -98,43 +102,81 @@ public class PropertiesControl2 {
         while (it.hasNext()) {
             Entry<Object, Object> entry = it.next();
             String key = (String) entry.getKey();
-            String value = (String)  entry.getValue();
+            String value = (String) entry.getValue();
             keyList.add(key);
             valueList.add(value);
+            kvMap.put(key, value);
         }
     }
-    
-    public List<String> getKeyList(){
+
+    public List<String> getKeyList() {
         return keyList;
     }
-    
-    public List<String> getValueList(){
+
+    public List<String> getValueList() {
         return valueList;
     }
-    
-    public void save(List<String> kList,List<String> vList){
-        int count =getCount();
-        for(int i=0;i<count;i++){
+
+    public Map<String, String> getKeysAndValuesMap() {
+        return kvMap;
+    }
+
+    public Iterator<Entry<Object, Object>> getIterator() {
+        return props.entrySet().iterator();
+    }
+
+    public void save(List<String> kList, List<String> vList) {
+        int count = getCount();
+        for (int i = 0; i < count; i++) {
             props.setProperty(kList.get(i), vList.get(i));
         }
     }
-    
-     /**
+
+    /**
      * 写入jar文件的话会将 jar文件原来的内容统统抹掉!!切记!!~
      *
      * @param original 源jar包路径
      * @param configPath jar包内属性文件路径
      * @param values 属性文件内容
-     * @param ctrl 0为另存为以"'原文件名'+'_temp.jar'"命名的文件，1为删除源文件，2为覆盖源文件。
      */
     public void write2JarFile(File original, String configPath, byte[] values) {
+        write2JarFile(original, null, configPath, values, 0);
+    }
+
+    /**
+     * 写入jar文件的话会将 jar文件原来的内容统统抹掉!!切记!!~
+     *
+     * @param original 源jar包路径
+     * @param tempFileName jar包名称
+     * @param configPath jar包内属性文件路径
+     * @param values 属性文件内容
+     */
+    public void write2JarFile(File original, String tempFileName, String configPath, byte[] values) {
+        write2JarFile(original, tempFileName, configPath, values, 0);
+    }
+
+    /**
+     * 写入jar文件的话会将 jar文件原来的内容统统抹掉!!切记!!~
+     *
+     * @param original 源jar包路径
+     * @param tempFileName jar包名称
+     * @param configPath jar包内属性文件路径
+     * @param values 属性文件内容
+     * @param ctrl 0为另存为以"'原文件名'+'_temp.jar'"命名的文件，1为删除源文件，2为覆盖源文件。
+     */
+    public void write2JarFile(File original, String tempFileName, String configPath, byte[] values, int ctrl) {
         String originalPath = original.getAbsolutePath();
         /**
          * 创建一个临时文件来做暂存，待一切操作完毕之后会将该文件重命名为原文件的名称(原文件会被删除掉)~
          */
-        String tempPath = originalPath.substring(0, originalPath.length() - 4) + "_temp.jar";
-//        System.out.println(tempPath);
+        String tempPath = null;
+        if (tempFileName == null) {
+            tempPath = originalPath.substring(0, originalPath.length() - 4) + "_temp.jar";
+        } else {
+            tempPath = original.getParent() + "/" + tempFileName + ".jar";
+        }
 
+//        System.out.println(tempPath);
         JarFile originalJar = null;
         try {
             originalJar = new JarFile(originalPath);
@@ -195,10 +237,24 @@ public class PropertiesControl2 {
             jos.close();
             fos.close();
 
-            /**
-             * 删除原始文件，将新生成的文件重命名为原始文件的名称~
-             */
-//            handled.renameTo(new File(originalPath));
+            switch (ctrl) {
+                case 0:
+
+                    break;
+                case 1:
+                    new File(originalPath).delete();
+                    break;
+                case 2:
+                    /**
+                     * 删除原始文件，将新生成的文件重命名为原始文件的名称~
+                     */
+                    handled.renameTo(new File(originalPath));
+                    break;
+                default:
+
+                    break;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

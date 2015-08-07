@@ -33,12 +33,12 @@ import translation.*;
  *
  * @author v
  */
-public class TAS extends javax.swing.JFrame {
+public class TAS1 extends javax.swing.JFrame {
 
     /**
-     * Creates new form TAS
+     * Creates new form TAS1
      */
-    public TAS() {
+    public TAS1() {
         initComponents();
     }
 
@@ -598,7 +598,7 @@ public class TAS extends javax.swing.JFrame {
             out.flush();
             out.close();
         } catch (IOException ex) {
-            Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TAS1.class.getName()).log(Level.SEVERE, null, ex);
         }
         jTextField_file.setText(jTextField_file.getText().toString().substring(0, jTextField_file.getText().toString().length() - 4) + "_temp.jar");
         jButton_getJarContext.doClick();
@@ -905,14 +905,14 @@ public class TAS extends javax.swing.JFrame {
                                             if (jCheckBox1.isSelected() & !values[i].substring(values[i].lastIndexOf("=") + 1).contains("\\u")) {
                                                 String t = "";
                                                 if (values[i].substring(values[i].lastIndexOf("=") + 1).contains("&")) {
-                                                    t = post.tg1(values[i].substring(values[i].lastIndexOf("=") + 1).replaceAll("&", ""));
+                                                    t = post.tg1(translate_site_baidu, values[i].substring(values[i].lastIndexOf("=") + 1).replaceAll("&", ""));
                                                     String temp1 = values[i].substring(values[i].lastIndexOf("=") + 1);
                                                     temp1 = temp1.substring(temp1.indexOf("&"));
                                                     temp1 = temp1.substring(0, 2);
                                                     temp1 = "(" + temp1 + ")";
                                                     t = t + temp1;
                                                 } else {
-                                                    t = post.tg1(values[i].substring(values[i].lastIndexOf("=") + 1));
+                                                    t = post.tg1(translate_site_baidu, values[i].substring(values[i].lastIndexOf("=") + 1));
                                                 }
                                                 if (t.equals("error")) {
                                                     sb.append(values[i].substring(values[i].lastIndexOf("=") + 1).replace("{ ", "{").replace(" }", "}") + newline);
@@ -998,13 +998,13 @@ public class TAS extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1014,7 +1014,7 @@ public class TAS extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new TAS().setVisible(true);
+                new TAS1().setVisible(true);
             }
         });
     }
@@ -1024,9 +1024,9 @@ public class TAS extends javax.swing.JFrame {
      */
     class MyDropTargetListener extends DropTargetAdapter {
 
-        private TAS tas;
+        private TAS1 tas;
 
-        public MyDropTargetListener(TAS tas) {
+        public MyDropTargetListener(TAS1 tas) {
             this.tas = tas;
         }
 
@@ -1060,7 +1060,6 @@ public class TAS extends javax.swing.JFrame {
                         tas.jTextField_file.setText(filePath);
                         System.out.println("jarFilePath=" + filePath);
 
-
                     }
                     // 一次只能处理一个，要避免处理多个的情况，因此 break 跳出~  
                     break;
@@ -1081,6 +1080,7 @@ public class TAS extends javax.swing.JFrame {
     WordsTransfer wt = new WordsTransfer();
     Post post = new Post();
     String translate_site = "http://zhangwei911.duapp.com/TranslateGet.jsp";
+    String translate_site_baidu = "http://viphp.sinaapp.com/baidu/translate/translate.php?origin=%s";
     JScrollBar bar, bar1, bar_compare;
     int index = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
