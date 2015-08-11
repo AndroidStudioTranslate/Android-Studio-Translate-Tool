@@ -21,6 +21,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
@@ -62,6 +66,8 @@ import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
+import test.DBManager;
+import test.Escape;
 import test.examples.org.apache.http.examples.nio.client.QuickStart;
 import translation.*;
 
@@ -260,6 +266,7 @@ public class TAS extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
         jButton_replaceAll = new javax.swing.JButton();
+        jButton_mysql = new javax.swing.JButton();
 
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setLocationByPlatform(true);
@@ -538,6 +545,13 @@ public class TAS extends javax.swing.JFrame {
             }
         });
 
+        jButton_mysql.setText("写入Mysql");
+        jButton_mysql.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_mysqlActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -556,7 +570,8 @@ public class TAS extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton_fileview2)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton_mysql))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton_fileview1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -601,7 +616,8 @@ public class TAS extends javax.swing.JFrame {
                         .addComponent(jButton_fileview2))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton3)
-                        .addComponent(jButton_replaceAll)))
+                        .addComponent(jButton_replaceAll)
+                        .addComponent(jButton_mysql)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
@@ -1177,6 +1193,93 @@ public class TAS extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_compareMouseClicked
 
+    private void jButton_mysqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_mysqlActionPerformed
+        // TODO add your handling code here:
+        writeIntoMysql();
+    }//GEN-LAST:event_jButton_mysqlActionPerformed
+
+    private void writeIntoMysql() {
+        if (jTextField_file.getText().toString().length() != 0 && jTextField_file.getText().toString() != null) {
+            JarFile jarFile = null;
+            DBManager dbm = new DBManager();
+            Connection connection = null;
+            Statement stmt = null;
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            try {
+                String sql_add = "insert into `AS`(`as_key`,`as_value_en`,`as_value_chinese`) values('%s','%s','%s')";
+                String sql_add1 = "insert into `AS`(`as_key`,`as_value_en`,`as_value_chinese`) values(%s,%s,%s)";
+                String sql_addpstmt = "insert into `AS`(`as_key`,`as_value_en`,`as_value_chinese`) values(?,?,?)";
+                String sql_select = "select * from `AS`";
+                connection = dbm.getConnection();
+                stmt = connection.createStatement();
+                pstmt = connection.prepareStatement(sql_addpstmt);
+                List<Integer> listTranslate = new ArrayList<Integer>();
+                List<String> listKey = new ArrayList<String>();
+                rs = stmt.executeQuery(sql_select);
+                while (rs.next()) {
+                    listKey.add(rs.getString("as_key"));
+                    listTranslate.add(rs.getInt("as_translate_chinese"));
+                }
+                rs.close();
+                boolean autoCommit = connection.getAutoCommit();
+                //关闭自动提交功能
+                connection.setAutoCommit(false);
+                jarFile = new JarFile(jTextField_file.getText().toString());
+                String[] files = PropertiesControl.getJarFileContent(new java.io.File(jTextField_file.getText().toString()));;
+                for (int i = 0; i < files.length; i++) {
+                    ZipEntry entrynew = jarFile.getEntry(files[i]);
+                    InputStream is = jarFile.getInputStream(entrynew);
+                    PropertiesControl2 pc2 = new PropertiesControl2(is);
+                    Map<String, String> kvMap = pc2.getKeysAndValuesMap();
+                    Iterator<Map.Entry<String, String>> it = kvMap.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry<String, String> entry = it.next();
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        if (listKey.contains(key)) {
+                            System.out.printf("数据库中已包含文件[%s]中字段：%s", files[i], key);
+                            System.out.println("");
+                        } else {
+//                            System.out.println(String.format(sql_add, Escape.escape(key), Escape.escape(value), Escape.escape("")));
+//                            stmt.executeUpdate(String.format(sql_add, Escape.escape(key), Escape.escape(value), Escape.escape("")));
+//                            System.out.println(String.format(sql_add, key, value, ""));
+//                            stmt.executeUpdate(String.format(sql_add, key, value, ""));
+                            System.out.println(String.format(sql_add1, setString(key), setString(value), setString("")));
+                            stmt.executeUpdate(String.format(sql_add1, setString(key), setString(value), setString("")));
+//                            pstmt.setString(1, key);
+//                            pstmt.setString(2, value);
+//                            pstmt.setString(3, "");
+//                            pstmt.execute();
+                        }
+                    }
+                }
+                //提交事务
+                connection.commit();
+                //恢复原来的提交模式
+                connection.setAutoCommit(autoCommit);
+                stmt.close();
+                pstmt.close();
+            } catch (Exception ex) {
+                Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    //回滚、取消前述操作
+                    connection.rollback();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+    }
+
     /**
      * 判断某个字符串是否存在于数组中
      *
@@ -1193,6 +1296,35 @@ public class TAS extends javax.swing.JFrame {
             }
         }
         return false;
+    }
+
+    /**
+     * Set a parameter to a Java String value. The driver converts this to a SQL
+     * VARCHAR or LONGVARCHAR value (depending on the arguments size relative to
+     * the driver's limits on VARCHARs) when it sends it to the database.
+     *
+     * @param parameterIndex the first parameter is 1...
+     * @param x the parameter value
+     * @exception java.sql.SQLException if a database access error occurs
+     */
+    public String setString(String x) {
+// if the passed string is null, then set this column to null
+        if (x == null) {
+            return "null";
+        } else {
+            StringBuffer B = new StringBuffer(x.length() * 2);
+            int i;
+            B.append('\'');
+            for (i = 0; i < x.length(); ++i) {
+                char c = x.charAt(i);
+                if (c == '\\' || c == '\'' || c == '"') {
+                    B.append((char) '\\');
+                }
+                B.append(c);
+            }
+            B.append('\'');
+            return B.toString();
+        }
     }
 
 //        if (evt.getButton() == MouseEvent.BUTTON3) {
@@ -1326,16 +1458,21 @@ public class TAS extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TAS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TAS.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -1348,6 +1485,7 @@ public class TAS extends javax.swing.JFrame {
                 new TAS().setVisible(true);
             }
         });
+
     }
 
     /**
@@ -1502,6 +1640,7 @@ public class TAS extends javax.swing.JFrame {
     private javax.swing.JButton jButton_fileview1;
     private javax.swing.JButton jButton_fileview2;
     private javax.swing.JButton jButton_getJarContext;
+    private javax.swing.JButton jButton_mysql;
     private javax.swing.JButton jButton_new;
     private javax.swing.JButton jButton_old;
     private javax.swing.JButton jButton_replaceAll;
