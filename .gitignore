@@ -1,5 +1,4 @@
 *.class
 
-!dist/TranslationAS.jar
 dist/
 *~
