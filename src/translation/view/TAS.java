@@ -161,7 +161,7 @@ public class TAS extends javax.swing.JFrame {
                 String origin = list.get(i);
                 // One most likely would want to use a callback for operation result
                 final CountDownLatch latch = new CountDownLatch(1);
-                System.out.println(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
+//                System.out.println(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
                 final HttpGet request = new HttpGet(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
                 httpclient.execute(request, new FutureCallback<HttpResponse>() {
 
@@ -172,7 +172,7 @@ public class TAS extends javax.swing.JFrame {
 //                            System.out.println(request.getRequestLine() + "->" + response2.getStatusLine());
                             HttpEntity entity = response2.getEntity();
                             String jsonContent = EntityUtils.toString(entity, "UTF-8");
-                            System.out.println("jsonContent:" + jsonContent.replace("{ ", "{").replace(" }", "}"));
+//                            System.out.println("jsonContent:" + jsonContent.replace("{ ", "{").replace(" }", "}"));
                             if (valueNewList.size() > index_final) {
                                 valueNewList.remove(index_final);
                             }
@@ -532,6 +532,7 @@ public class TAS extends javax.swing.JFrame {
         });
 
         jButton3.setText("替换");
+        jButton3.setVisible(false);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -546,6 +547,7 @@ public class TAS extends javax.swing.JFrame {
         });
 
         jButton_mysql.setText("写入Mysql");
+        jButton_mysql.setVisible(false);
         jButton_mysql.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_mysqlActionPerformed(evt);
@@ -776,11 +778,17 @@ public class TAS extends javax.swing.JFrame {
             fos = new FileOutputStream(tmpFile);
             int count = keyList.size();
             for (int i = 0; i < count; i++) {
-                prop.put(keyList.get(i), wt.utf8ToUnicode(valueNewList.get(i)));
+                prop.put(keyList.get(i), valueNewList.get(i));
             }
             prop.store(fos, "Update:" + chooseConfigPath);
             is1 = new FileInputStream(tmpFile);
-            pc2.write2JarFile(jarFilePath, chooseConfigPath, pc2.inputStream2byteArray(is1));
+//            pc2.write2JarFile(jarFilePath, chooseConfigPath, pc2.inputStream2byteArray(is1));
+            if (saveTime == 0) {
+                pc2.write2JarFile(jarFilePath, "temp" + jarFilePath.getName(), chooseConfigPath, pc2.inputStream2byteArray(is1));
+            } else {
+                pc2.write2JarFile(new File(jarFilePath.getParent(), "temp" + jarFilePath.getName() + ".jar"), null, chooseConfigPath, pc2.inputStream2byteArray(is1), 2);
+            }
+            saveTime++;
             jButton_saveProperties.setEnabled(false);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
@@ -926,7 +934,7 @@ public class TAS extends javax.swing.JFrame {
 
     private void jMenuItem_translateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_translateActionPerformed
         // TODO add your handling code here:
-        System.out.println("点击翻译菜单1");
+//        System.out.println("点击翻译菜单1");
         List<String> list = new ArrayList<String>();
         list.clear();
         list.add(valueList.get(rightClickIndex));
@@ -1606,6 +1614,7 @@ public class TAS extends javax.swing.JFrame {
         }
 
     };
+    private int saveTime = 0;
     private java.io.File f, f1, fnew, fold;
     PropertiesControl pc = new PropertiesControl();
     PropertiesControl2 pc2;

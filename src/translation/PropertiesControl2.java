@@ -173,7 +173,7 @@ public class PropertiesControl2 {
         if (tempFileName == null) {
             tempPath = originalPath.substring(0, originalPath.length() - 4) + "_temp.jar";
         } else {
-            tempPath = original.getParent() + "/" + tempFileName + ".jar";
+            tempPath = original.getParent() + "/" + tempFileName;
         }
 
 //        System.out.println(tempPath);
