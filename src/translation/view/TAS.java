@@ -1010,6 +1010,9 @@ public class TAS extends javax.swing.JFrame {
                         newjarFile = new JarFile(jTextField_newfile.getText().toString());
                         oldjarFile = new JarFile(jTextField_oldfile.getText().toString());
                         for (int i = 0; i < newfiles.length; i++) {
+                            jTextArea_list.setText(jTextArea_list.getText().replaceAll("正在比对中->", ""));
+                            System.out.println(i + "---->" + newfiles[i]);
+                            jTextArea_list.append(newline + "正在比对中->" + newfiles[i]);
                             //System.out.println("Newfile:" + newfiles[i] + "  Oldfile:" + oldfiles[i]);
                             ZipEntry entrynew = newjarFile.getEntry(newfiles[i]);
                             ZipEntry entryold;
@@ -1057,7 +1060,11 @@ public class TAS extends javax.swing.JFrame {
 //                            System.out.println("============以下为新数据============");
                                 while (itnew.hasNext()) {
                                     Map.Entry<String, String> entry = itnew.next();
-                                    prop.put(entry.getKey(), wt.utf8ToUnicode(entry.getValue()));
+                                    String value = entry.getValue();
+                                    if (!value.contains("\\u")) {
+                                        value = wt.utf8ToUnicode(value);
+                                    }
+                                    prop.put(entry.getKey(), value);
 //                                    prop.put(entry.getKey(), entry.getValue());
 //                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
 //                                System.out.println();
@@ -1067,9 +1074,10 @@ public class TAS extends javax.swing.JFrame {
                                 prop.store(fos, "Update:" + newfiles[i]);
                                 is1 = new FileInputStream(tmpFile);
                                 if (i == 0) {
-                                    pc2new.write2JarFile(jarFilePath, "temp" + jarFilePath.getName(), newfiles[i], pc2new.inputStream2byteArray(is1));
+                                    pc2new.write2JarFile(jarFilePath, "new_" + jarFilePath.getName(), newfiles[i], pc2new.inputStream2byteArray(is1));
                                 } else {
-                                    pc2new.write2JarFile(new File(jarFilePath.getParent(), "temp" + jarFilePath.getName() + ".jar"), null, newfiles[i], pc2new.inputStream2byteArray(is1), 2);
+//                                    System.out.println("temp" + jarFilePath.getName() + ".jar");
+                                    pc2new.write2JarFile(new File(jarFilePath.getParent(), "new_" + jarFilePath.getName()), null, newfiles[i], pc2new.inputStream2byteArray(is1), 2);
                                 }
                             } catch (FileNotFoundException ex) {
                                 Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
@@ -1167,14 +1175,6 @@ public class TAS extends javax.swing.JFrame {
 //                            //System.out.println(sb.toString());
 //                        }
 //                        pc.write2JarFile(new File(jTextField_oldfile.getText().toString()), newfiles[i], sb.toString().getBytes());
-                            String listtemp = "";
-                            if (i == 0) {
-                                listtemp = newfiles[i];
-                            } else {
-                                listtemp = newline + newfiles[i];
-                            }
-                            System.out.println(i + "---->" + listtemp);
-                            jTextArea_list.append(listtemp);
                             bar_compare.setValue(bar_compare.getMaximum());
                             Thread.sleep(1000);
                         }
@@ -1191,7 +1191,9 @@ public class TAS extends javax.swing.JFrame {
                             jTextArea_list.append(listtemp);
                         }
                     }
+                    jTextArea_list.setText(jTextArea_list.getText().replaceAll("正在比对中->", ""));
                     jTextArea_list.append(newline + "比较完毕！！！" + newline + newline + newline + newline + newline);
+                    System.out.println("比较完毕！！！");
                     bar_compare.setValue(bar_compare.getMaximum());
                     isReplaceStart = false;
                 }
