@@ -1061,10 +1061,13 @@ public class TAS extends javax.swing.JFrame {
                                 while (itnew.hasNext()) {
                                     Map.Entry<String, String> entry = itnew.next();
                                     String value = entry.getValue();
-                                    if (!value.contains("\\u")) {
-                                        value = wt.utf8ToUnicode(value);
-                                    }
+//                                    System.out.println(value);
+//                                    if (!value.contains("\\u")) {
+//                                        value = wt.utf8ToUnicode(value);
+//                                    }
+//                                    System.out.println("->"+value);
                                     prop.put(entry.getKey(), value);
+                                    System.out.println(prop.getProperty(entry.getKey()));
 //                                    prop.put(entry.getKey(), entry.getValue());
 //                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
 //                                System.out.println();
