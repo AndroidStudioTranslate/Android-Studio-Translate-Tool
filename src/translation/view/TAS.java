@@ -173,10 +173,12 @@ public class TAS extends javax.swing.JFrame {
                             HttpEntity entity = response2.getEntity();
                             String jsonContent = EntityUtils.toString(entity, "UTF-8");
 //                            System.out.println("jsonContent:" + jsonContent.replace("{ ", "{").replace(" }", "}"));
-                            if (valueNewList.size() > index_final) {
-                                valueNewList.remove(index_final);
-                            }
-                            valueNewList.add(index_final, (origin.substring(0, 6).toLowerCase().equals("<html>")?origin.substring(0, 6):"") +jsonContent.replace("{ ", "{").replace(" }", "}"));
+//                            if (valueNewList.size() > index_final) {
+//                                valueNewList.remove(index_final);
+//                            }
+                            String newValue = (origin.length() > 6 ? (origin.substring(0, 6).toLowerCase().equals("<html>")?origin.substring(0, 6):""):"") +jsonContent.replace("{ ", "{").replace(" }", "}");
+//                            System.out.println(newValue);
+                            valueNewList.set(index_final, newValue);
                             jTable_kv.updateUI();
                             jButton_saveProperties.setEnabled(true);
                             jLabel1.setText((index_final + 1) + "/" + valueNewList.size());
@@ -185,9 +187,11 @@ public class TAS extends javax.swing.JFrame {
                             Rectangle rect = jTable_kv.getCellRect(index_final, 0, true);
                             jTable_kv.scrollRectToVisible(rect);
                         } catch (IOException ex) {
-                            Logger.getLogger(QuickStart.class.getName()).log(Level.SEVERE, null, ex);
+                            ex.printStackTrace();
+                            Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ParseException ex) {
-                            Logger.getLogger(QuickStart.class.getName()).log(Level.SEVERE, null, ex);
+                            ex.printStackTrace();
+                            Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
 
