@@ -719,7 +719,7 @@ public class TAS extends javax.swing.JFrame {
 //            jTextField_file.setText("请选择原始属性文件");
 //            jButton_fileview1.doClick();
 //        }
-
+        saveTime = 0;
         jList1.setModel(new javax.swing.AbstractListModel() {
 
             String[] strings = PropertiesControl.getJarFileContent(new java.io.File(jTextField_file.getText().toString()));
@@ -799,10 +799,15 @@ public class TAS extends javax.swing.JFrame {
             if (saveTime == 0) {
                 pc2.write2JarFile(jarFilePath, "temp" + jarFilePath.getName(), chooseConfigPath, pc2.inputStream2byteArray(is1));
             } else {
-                pc2.write2JarFile(new File(jarFilePath.getParent(), "temp" + jarFilePath.getName() + ".jar"), null, chooseConfigPath, pc2.inputStream2byteArray(is1), 2);
+                pc2.write2JarFile(new File(jarFilePath.getParent(), "temp" + jarFilePath.getName()), null, chooseConfigPath, pc2.inputStream2byteArray(is1), 2);
             }
             saveTime++;
             jButton_saveProperties.setEnabled(false);
+//            String originJarPath = jTextField_file.getText().toString();
+//            File originJarFile = new File(originJarPath);
+//            String originJarFileName = originJarFile.getName();
+//            jTextField_file.setText(originJarPath.replace(originJarFileName, "temp" + originJarFileName));
+//            jButton_getJarContext.doClick();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TAS.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
