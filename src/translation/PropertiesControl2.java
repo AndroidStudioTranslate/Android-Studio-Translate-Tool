@@ -171,12 +171,12 @@ public class PropertiesControl2 {
          */
         String tempPath = null;
         if (tempFileName == null) {
-            tempPath = originalPath.substring(0, originalPath.length() - 4) + "_temp.jar";
+            tempPath = originalPath.substring(0, originalPath.lastIndexOf(".")) + "_temp" + originalPath.substring(originalPath.lastIndexOf("."));
         } else {
-            tempPath = original.getParent() + "/" + tempFileName;
+            tempPath = original.getParent() + File.separator + tempFileName;
         }
 
-//        System.out.println(tempPath);
+        System.out.println(tempPath);
         JarFile originalJar = null;
         try {
             originalJar = new JarFile(originalPath);
@@ -248,7 +248,10 @@ public class PropertiesControl2 {
                     /**
                      * 删除原始文件，将新生成的文件重命名为原始文件的名称~
                      */
-                    handled.renameTo(new File(originalPath));
+                    System.out.println(originalPath);
+//                    handled.renameTo(new File(originalPath));
+                    copyFile(tempPath,originalPath);
+                    handled.delete();
                     break;
                 default:
 
@@ -279,5 +282,46 @@ public class PropertiesControl2 {
         }
         byte[] bytes = baos.toByteArray();
         return bytes;
+    }
+    
+    private static void copyFile(String oldPath,
+        String newPath)
+        throws Exception {
+
+        int bytesum = 0;
+        int byteread = 0;
+        FileInputStream inPutStream = null;
+        FileOutputStream outPutStream = null;
+
+        try {
+
+            // oldPath的文件copy到新的路径下，如果在新路径下有同名文件，则覆盖源文件
+            inPutStream = new FileInputStream(oldPath);
+
+            outPutStream = new FileOutputStream(newPath);
+            byte[] buffer = new byte[4096];
+
+            while ((byteread = inPutStream.read(buffer)) != -1) {
+
+                // byte ファイル
+                bytesum += byteread;
+                outPutStream.write(buffer, 0, byteread);
+            }
+        } finally {
+
+            // inPutStreamを关闭
+            if (inPutStream != null) {
+                inPutStream.close();
+                inPutStream = null;
+            }
+
+            // inPutStream关闭
+            if (outPutStream != null) {
+                outPutStream.close();
+                outPutStream = null;
+            }
+
+        }
+
     }
 }

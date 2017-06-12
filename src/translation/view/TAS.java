@@ -241,6 +241,7 @@ public class TAS extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem_translate = new javax.swing.JMenuItem();
+        jMenuItem_reset = new javax.swing.JMenuItem();
         jDialog_ra = new javax.swing.JDialog();
         jTextField_newfile = new javax.swing.JTextField();
         jButton_new = new javax.swing.JButton();
@@ -373,6 +374,14 @@ public class TAS extends javax.swing.JFrame {
             }
         });
         jPopupMenu1.add(jMenuItem_translate);
+
+        jMenuItem_reset.setText("重置");
+        jMenuItem_reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_resetActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem_reset);
 
         jDialog_ra.setTitle("比较新旧版");
         jDialog_ra.setMinimumSize(new java.awt.Dimension(500, 300));
@@ -1040,7 +1049,9 @@ public class TAS extends javax.swing.JFrame {
                             while (itold.hasNext()) {
                                 Map.Entry<String, String> entry = itold.next();
                                 if (kvMapNew.containsKey(entry.getKey())) {
+                                    System.out.println("old: " + kvMapOld.get(entry.getKey()) + " new: " + kvMapNew.get(entry.getKey()));
                                     kvMapNew.put(entry.getKey(), entry.getValue());
+                                    System.out.println("new: " + kvMapNew.get(entry.getKey()));
 //                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
 //                                System.out.println();
                                 }
@@ -1052,6 +1063,14 @@ public class TAS extends javax.swing.JFrame {
                             try {
                                 File jarFilePath = new File(jTextField_newfile.getText().toString());
 
+//                                File dir = new File(new File(jTextField_newfile.getText().toString()).getParent() + File.separator + "messages");
+//                                if(!dir.exists()){
+//                                    dir.mkdir();
+//                                }
+//                                tmpFile = new File(new File(jTextField_newfile.getText().toString()).getParent() + File.separator , newfiles[i]);
+//                                if(!tmpFile.exists()){
+//                                    tmpFile.createNewFile();
+//                                }
                                 tmpFile = File.createTempFile("tmp", ".properties");
                                 Properties prop = new Properties();
                                 is = new FileInputStream(tmpFile);
@@ -1067,7 +1086,7 @@ public class TAS extends javax.swing.JFrame {
 //                                    }
 //                                    System.out.println("->"+value);
                                     prop.put(entry.getKey(), value);
-                                    System.out.println(prop.getProperty(entry.getKey()));
+//                                    System.out.println("old: " + kvMapOld.get(entry.getKey()) + " \nnew: " + prop.getProperty(entry.getKey()));
 //                                    prop.put(entry.getKey(), entry.getValue());
 //                                System.out.printf("key:%s==>value:%s", entry.getKey(), entry.getValue());
 //                                System.out.println();
@@ -1210,6 +1229,11 @@ public class TAS extends javax.swing.JFrame {
         // TODO add your handling code here:
         writeIntoMysql();
     }//GEN-LAST:event_jButton_mysqlActionPerformed
+
+    private void jMenuItem_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_resetActionPerformed
+        valueNewList.set(rightClickIndex,valueList.get(rightClickIndex));
+        jTable_kv.updateUI();
+    }//GEN-LAST:event_jMenuItem_resetActionPerformed
 
     private void writeIntoMysql() {
         if (jTextField_file.getText().toString().length() != 0 && jTextField_file.getText().toString() != null) {
@@ -1667,6 +1691,7 @@ public class TAS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList1;
+    private javax.swing.JMenuItem jMenuItem_reset;
     private javax.swing.JMenuItem jMenuItem_translate;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JProgressBar jProgressBar1;
