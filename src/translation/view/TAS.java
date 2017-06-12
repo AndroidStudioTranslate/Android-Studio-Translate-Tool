@@ -158,7 +158,7 @@ public class TAS extends javax.swing.JFrame {
                     index = index_list;
                 }
                 final int index_final = index;
-                String origin = list.get(i);
+                final String origin = list.get(i);
                 // One most likely would want to use a callback for operation result
                 final CountDownLatch latch = new CountDownLatch(1);
 //                System.out.println(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
@@ -176,7 +176,7 @@ public class TAS extends javax.swing.JFrame {
                             if (valueNewList.size() > index_final) {
                                 valueNewList.remove(index_final);
                             }
-                            valueNewList.add(index_final, jsonContent.replace("{ ", "{").replace(" }", "}"));
+                            valueNewList.add(index_final, (origin.substring(0, 6).toLowerCase().equals("<html>")?origin.substring(0, 6):"") +jsonContent.replace("{ ", "{").replace(" }", "}"));
                             jTable_kv.updateUI();
                             jButton_saveProperties.setEnabled(true);
                             jLabel1.setText((index_final + 1) + "/" + valueNewList.size());
