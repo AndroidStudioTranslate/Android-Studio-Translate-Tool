@@ -153,6 +153,10 @@ public class TAS extends javax.swing.JFrame {
             httpclient.start();
             final int count = list.size();
             for (int i = 0; i < count; i++) {
+                if(isTranslateAll && !jCheckBox1.isSelected()){
+                    isTranslateAll = false;
+                    break;
+                }
                 int index = i;
                 if (count == 1) {
                     index = index_list;
@@ -176,7 +180,7 @@ public class TAS extends javax.swing.JFrame {
 //                            if (valueNewList.size() > index_final) {
 //                                valueNewList.remove(index_final);
 //                            }
-                            String newValue = (origin.length() > 6 ? (origin.substring(0, 6).toLowerCase().equals("<html>")?origin.substring(0, 6):""):"") +jsonContent.replace("{ ", "{").replace(" }", "}");
+                            String newValue = (origin.length() > 6 ? (origin.substring(0, 6).toLowerCase().equals("<html>")?origin.substring(0, 6):""):"") +jsonContent.replaceAll("[{] ", "{").replaceAll(" }", "}").replaceAll("\\\\n", "\n");
 //                            System.out.println(newValue);
                             valueNewList.set(index_final, newValue);
                             jTable_kv.updateUI();
@@ -1430,9 +1434,11 @@ public class TAS extends javax.swing.JFrame {
                                 ((AbstractTableModel) jTable_kv.getModel()).fireTableDataChanged(); //更新数据
                                 jTable_kv.setModel(dataModel);
                                 if (jCheckBox1.isSelected()) {
+                                    isTranslateAll = true;
                                     translate(valueList, 0);
                                 } else {
-                                    jTable_kv.updateUI();
+                                    isTranslateAll = false;
+//                                    jTable_kv.updateUI();
                                 }
 
 //                                bar1.setValue(bar1.getMaximum());
@@ -1677,6 +1683,7 @@ public class TAS extends javax.swing.JFrame {
     TableColumnModel cmodel = null;
     private int rightClickIndex = 0;
     private boolean isReplaceStart = false;
+    private boolean isTranslateAll = false;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
