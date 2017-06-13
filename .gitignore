@@ -2,4 +2,4 @@
 
 dist/
 *~
-BaiDuTranslateApiConfig.java
+src/translation/baidu/BaiDuTranslateApiConfig.java
