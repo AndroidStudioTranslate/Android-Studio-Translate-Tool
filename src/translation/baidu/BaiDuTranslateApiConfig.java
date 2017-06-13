@@ -10,5 +10,6 @@ package translation.baidu;
  * @author swtf
  */
 public class BaiDuTranslateApiConfig {
-    
+    public static final String APP_ID = "";
+    public static final String SECURITY_KEY = "";
 }
