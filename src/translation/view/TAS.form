@@ -347,7 +347,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jButton_getJarContext" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField1" pref="212" max="32767" attributes="0"/>
+                                      <Component id="jTextField1" pref="158" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -358,12 +358,13 @@
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jCheckBox1" min="-2" pref="63" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jComboBox_language" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jButton_saveProperties" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
@@ -391,7 +392,10 @@
                       <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox_language" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -569,6 +573,45 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton_mysql.setVisible(false);"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox_language">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="28">
+            <StringItem index="0" value="&#x4e2d;&#x6587;"/>
+            <StringItem index="1" value="&#x7e41;&#x4f53;&#x4e2d;&#x6587;"/>
+            <StringItem index="2" value="&#x82f1;&#x8bed;"/>
+            <StringItem index="3" value="&#x7ca4;&#x8bed;"/>
+            <StringItem index="4" value="&#x6587;&#x8a00;&#x6587;"/>
+            <StringItem index="5" value="&#x65e5;&#x8bed;"/>
+            <StringItem index="6" value="&#x97e9;&#x8bed;"/>
+            <StringItem index="7" value="&#x6cd5;&#x8bed;"/>
+            <StringItem index="8" value="&#x897f;&#x73ed;&#x7259;&#x8bed;"/>
+            <StringItem index="9" value="&#x6cf0;&#x8bed;"/>
+            <StringItem index="10" value="&#x963f;&#x62c9;&#x4f2f;&#x8bed;"/>
+            <StringItem index="11" value="&#x4fc4;&#x8bed;"/>
+            <StringItem index="12" value="&#x8461;&#x8404;&#x7259;&#x8bed;"/>
+            <StringItem index="13" value="&#x5fb7;&#x8bed;"/>
+            <StringItem index="14" value="&#x610f;&#x5927;&#x5229;&#x8bed;"/>
+            <StringItem index="15" value="&#x5e0c;&#x814a;&#x8bed;"/>
+            <StringItem index="16" value="&#x8377;&#x5170;&#x8bed;"/>
+            <StringItem index="17" value="&#x6ce2;&#x5170;&#x8bed;"/>
+            <StringItem index="18" value="&#x4fdd;&#x52a0;&#x5229;&#x4e9a;&#x8bed;"/>
+            <StringItem index="19" value="&#x7231;&#x6c99;&#x5c3c;&#x4e9a;&#x8bed;"/>
+            <StringItem index="20" value="&#x4e39;&#x9ea6;&#x8bed;"/>
+            <StringItem index="21" value="&#x82ac;&#x5170;&#x8bed;"/>
+            <StringItem index="22" value="&#x6377;&#x514b;&#x8bed;"/>
+            <StringItem index="23" value="&#x7f57;&#x9a6c;&#x5c3c;&#x4e9a;&#x8bed;"/>
+            <StringItem index="24" value="&#x65af;&#x6d1b;&#x6587;&#x5c3c;&#x4e9a;&#x8bed;"/>
+            <StringItem index="25" value="&#x745e;&#x5178;&#x8bed;"/>
+            <StringItem index="26" value="&#x5308;&#x7259;&#x5229;&#x8bed;"/>
+            <StringItem index="27" value="&#x8d8a;&#x5357;&#x8bed;"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
   </SubComponents>

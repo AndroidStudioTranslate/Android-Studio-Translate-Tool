@@ -165,8 +165,9 @@ public class TAS extends javax.swing.JFrame {
                 final String origin = list.get(i);
                 // One most likely would want to use a callback for operation result
                 final CountDownLatch latch = new CountDownLatch(1);
-//                System.out.println(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
-                final HttpGet request = new HttpGet(String.format(translate_site_baidu, URLEncoder.encode(origin, "UTF-8")));
+                String to = language[jComboBox_language.getSelectedIndex()];
+//                System.out.println(String.format(translate_site_baidu, to, URLEncoder.encode(origin, "UTF-8")));
+                final HttpGet request = new HttpGet(String.format(translate_site_baidu, to, URLEncoder.encode(origin, "UTF-8")));
                 httpclient.execute(request, new FutureCallback<HttpResponse>() {
 
                     @Override
@@ -276,6 +277,7 @@ public class TAS extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton_replaceAll = new javax.swing.JButton();
         jButton_mysql = new javax.swing.JButton();
+        jComboBox_language = new javax.swing.JComboBox<>();
 
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setLocationByPlatform(true);
@@ -571,6 +573,8 @@ public class TAS extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_language.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "中文", "繁体中文", "英语", "粤语", "文言文", "日语", "韩语", "法语", "西班牙语", "泰语", "阿拉伯语", "俄语", "葡萄牙语", "德语", "意大利语", "希腊语", "荷兰语", "波兰语", "保加利亚语", "爱沙尼亚语", "丹麦语", "芬兰语", "捷克语", "罗马尼亚语", "斯洛文尼亚语", "瑞典语", "匈牙利语", "越南语" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -596,18 +600,19 @@ public class TAS extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton_getJarContext)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))))
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_language, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton_saveProperties, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton_replaceAll)
@@ -627,7 +632,9 @@ public class TAS extends javax.swing.JFrame {
                         .addComponent(jButton_getJarContext)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1))
-                    .addComponent(jCheckBox1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox1)
+                        .addComponent(jComboBox_language, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1671,7 +1678,7 @@ public class TAS extends javax.swing.JFrame {
     WordsTransfer wt = new WordsTransfer();
     MSDN_Translate msdnt = new MSDN_Translate();
     Post post = new Post();
-    String translate_site_baidu = "http://viphp.sinaapp.com/baidu/translate/translate.php?origin=%s";
+    String translate_site_baidu = "http://viphp.sinaapp.com/baidu/translate/translate.php?to=%s&origin=%s";
     int index = 0;
     TableColumn tc_id, tc_key, tc_value_origin, tc_value_new;
     TableCellEditor tce_value_new;
@@ -1684,6 +1691,36 @@ public class TAS extends javax.swing.JFrame {
     private int rightClickIndex = 0;
     private boolean isReplaceStart = false;
     private boolean isTranslateAll = false;
+    private final String[] language = {
+        "zh",
+        "cht",
+        "en",
+        "yue",
+        "wyw",
+        "jp",
+        "kor",
+        "fra",
+        "spa",
+        "th",
+        "ara",
+        "ru",
+        "pt",
+        "de",
+        "it",
+        "el",
+        "nl",
+        "pl",
+        "bul",
+        "est",
+        "dan",
+        "fin",
+        "cs",
+        "rom",
+        "slo",
+        "swe",
+        "hu",
+        "vie"
+    };
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1700,6 +1737,7 @@ public class TAS extends javax.swing.JFrame {
     private javax.swing.JButton jButton_replaceAll;
     private javax.swing.JButton jButton_saveProperties;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox_language;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog_ra;
