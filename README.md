@@ -7,4 +7,4 @@
 %注意%
 点击比较新旧按钮,选择新旧(任意已汉化的)resources_en.jar文件,点击比较会将新的进行翻译并生成一个新的文件
 
-由于百度翻译API限制ip,请自行申请,并在[BaiDuTranslateApiConfig.java](https://github.com/AndroidStudioTranslate/Android-Studio-Translate-Tool/blob/master/src/translation/baidu/BaiDuTranslateApiConfig.java "BaiDuTranslateApiConfig.java")
+由于百度翻译API限制ip,请自行申请,并在[BaiDuTranslateApiConfig.java](https://github.com/AndroidStudioTranslate/Android-Studio-Translate-Tool/blob/master/src/translation/baidu/BaiDuTranslateApiConfig.java "BaiDuTranslateApiConfig.java")进行配置.
