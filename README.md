@@ -8,3 +8,6 @@
 点击比较新旧按钮,选择新旧(任意已汉化的)resources_en.jar文件,点击比较会将新的进行翻译并生成一个新的文件
 
 由于百度翻译API限制ip,请自行申请,并在[BaiDuTranslateApiConfig.java](https://github.com/AndroidStudioTranslate/Android-Studio-Translate-Tool/blob/master/src/translation/baidu/BaiDuTranslateApiConfig.java "BaiDuTranslateApiConfig.java")进行配置.
+
+
+# windows安装文件链接(win10 x64测试,由于上传大小限制,只能放在百度网盘): https://pan.baidu.com/s/1EaRbIbRw2Dh36eS58MxpUA 提取码: cjhf
