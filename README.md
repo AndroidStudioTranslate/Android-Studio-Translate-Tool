@@ -11,3 +11,5 @@
 
 
 # windows安装文件链接(win10 x64测试,由于上传大小限制,只能放在百度网盘): https://pan.baidu.com/s/1EaRbIbRw2Dh36eS58MxpUA 提取码: cjhf
+
+# 对新的语言包进行汉化看这里https://github.com/AndroidStudioTranslate/Android-Studio-Translate-Tool-Replace
